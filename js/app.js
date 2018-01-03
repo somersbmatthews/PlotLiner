@@ -1,25 +1,54 @@
+
+// constant that stores the length of the line to be displayed
+const charactersPerLine = 50;
+const wordsPerPage = 600;
+// test text string
+let testString = "Jack and Jill \n Went up the hill \n To fetch a pail of water \n Jack fell down \n And broke his crown, \n And Jill came tumbling after"
+
+
+// class that makes pages
 class Page {
+  // constructor for the Page class that stores the name of the book, the page number, the array that stores each line
   constructor(bookName, pageNumber, lineArray){
+    // name of the book
     this.bookName = bookName;
+    // stores page number
     this.pageNumber = pageNumber;
+    // stores array of lines
     this.lineArray = lineArray;
   }
-// run function foo
-
+// run function that parses the page text into lines
+lineGenerator(
+const lineArray = [];
 // di
 
 }
-
+// class that is a factory for pages (page class above)
 class PageMaker {
-  constructor(bookName, str){
+  // constructor for the PageMaker factory that stores the name of the book, and allows for rawText to be parsed into pages
+  constructor(bookName, rawText){
+    // name of the book
     this.bookName = bookName;
-    this.str = str;
+    // stores raw text
+    this.rawText = rawText;
+    // stores pages in an array of large strings to be later parsed into lines in the page class variable: lineArray
     this.pages = [];
   }
-  pageGenerator(bookName, str){
-    const lineArray = [];
-    const newPage = new Page(this.bookName, this.pages.length);
+  // function that makes a page
+  pageGenerator(bookName, rawText){
+    // variable newPage stores the instantiation of the Page class in the PageMaker Factory
+    const newPage = new Page(bookName, this.pages.length);
+      // do...while loop that scans the text and makes it into pages
+      let arrayOfAllWords = rawText.split(" ")
+        do {
+          for(let i=0; i<arr.length; i++) {
+            if(arr[i] == "\n"
+          }
+        }
+        while(
 
+
+      // returns the new page that has yet to be parsed into lines
       return newPage;
   }
 }
@@ -117,7 +146,7 @@ function lineIterator(){
      case 'parachute':
        plotNode1B.lineIterator()
        break;
-       
+
 
      }
 
