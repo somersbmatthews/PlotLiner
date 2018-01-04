@@ -11,18 +11,20 @@ let testString = "Jack and Jill newline Went up the hill newline To fetch a pail
 // class that makes pages
 
 // class that is a factory for pages (page class above)
-class PageMaker {
-  // constructor for the PageMaker factory that stores the name of the book, and allows for rawText to be parsed into pages
-  constructor(bookName, rawText){
-    // name of the book
-    this.bookName = bookName;
-    // stores raw text
-    this.rawText = rawText;
-    // stores pages in an array of large strings to be later parsed into lines in the page class variable: lineArray
-    this.pages = [];
-  }
+// class PageMaker {
+//   // constructor for the PageMaker factory that stores the name of the book, and allows for rawText to be parsed into pages
+//   constructor(bookName, rawText){
+//     // name of the book
+//     this.bookName = bookName;
+//     // stores raw text
+//     this.rawText = rawText;
+//     // stores pages in an array of large strings to be later parsed into lines in the page class variable: lineArray
+//     this.pages = [];
+//
+//   }
+const pageMaker = {
   // function that makes a page
- pageGenerator(rawText){
+ pageGenerator: function(rawText){
     // variable newPage stores the instantiation of the Page class in the PageMaker Factory
   //  const newPage = new Page(bookName, this.pages.length);
       // do...while loop that scans the text and makes it into pages
@@ -53,88 +55,76 @@ class PageMaker {
   }
 }
 
-class Page extends PageMaker {
-    // constructor for the Page class that stores the name of the book, the page number, the array that stores each line
-    constructor(pageArray, pageNumber, bookName, rawText){
-      super(bookName, rawText)
-      // name of the book
-    //  this.bookName = bookName;
-      // stores page number
-      this.pageNumber = pageNumber;
-      // array that stores every page
-      this.pageArray = pageArray;
-      // stores array of lines
-
-
-
-    }
-
+// class Page extends PageMaker {
+//     // constructor for the Page class that stores the name of the book, the page number, the array that stores each line
+//     constructor(pageArray, pageNumber, bookName, rawText){
+//       super(bookName, rawText)
+//       // name of the book
+//     //  this.bookName = bookName;
+//       // stores page number
+//       this.pageNumber = pageNumber;
+//       // array that stores every page
+//       this.pageArray = pageArray;
+//       // stores array of lines
+//     }
+// }
   // run function that parses the page text into lines
+const page = {
  lineGenerator(){
-   let lineCounter = 1;
-   console.log(this.pageArray);
+   const arrayOfObjects = [];
+  function turnWordsIntoObjects(pageArray){
+
+    let wordObject = {};
+       for(let i = 0; i<pageArray.length; i++){
+         wordObject.word = pageArray[i];
+         wordObject.index = i;
+         wordObject.trigger = "";
+         arrayOfObjects.push(wordObject);
+         wordObject = {};
+       }
+
+   }
+   turnWordsIntoObjects(this.pageArray)
+
    let $body = $('body')
    let lineArray = [];
-        for(let i =0; i<this.pageArray.length; i++){
+   let $div = $('<div>');
+         for(let i =0; i<arrayOfObjects.length; i++){
+    console.log(arrayOfObjects, typeof(arrayOfObjects));
+           if(arrayOfObjects[i] =="newline"){
+             $div = $('<div>');
+             i++;
+           }
 
-                lineArray.push(this.pageArray[i]);
+                //print a menu where the word water
 
+              let $span = $('<span>'+arrayOfObjects[i].word+" "+'</span>');
 
+              $body.append($div);
+              $div.append($span);
 
-               if(this.pageArray[i]=="water"){
-
-                 //print a menu where the word water
-               let $span = $('<span id="myDropdown">Mydropdown</span>');
-               let $div = $('#A3');
-               $div.append($span);
-               $('#A3').append($span)
-               $span.html("water")
-
-                 let $link = $('<a href="#" id="plotNode1A">Water</a>');
-                 $link.appendTo($span);
-                 let $link2 = $('<a href="#" id="plotNode1B">Parachute</a>')
-                 $link2.appendTo($span);
-
-
-                 i++;
-               }
-              if(this.pageArray[i] =="newline"&&lineArray.length!=0){
-          //      console.log(this.lineArray);
-                lineArray.pop();
-          //     console.log(this.lineArray);
-
+              switch (arrayOfObjects[i].word){
+                case 'water':
+                  arrayOfObjects[i].trigger = "plotNode1A";
+                  let page = new Page();
+                  game.decrementHealthBy(100);
+                  break;
+                case 'parachute':
+                  arrayOfObjects[i].trigger = "plotNode1B";
+                  let page = new Page(plotNode1B.string);
+                  page.lineGenerator()
+                }
 
 
-                let line = lineArray.join(" ");
-                console.log(line);
-                let $div = $('<div>')
-                $div.attr('id', "A" +lineCounter)
+           }
+
+pageMaker.pageGenerator(testString)
+
+let pageArray = page.lineGenerator(pageArray)
 
 
-                $div.html(line)
-                $div.appendTo('body')
-                lineArray = []
-                lineCounter++;
-              }
-      // call function for plotNode1 check
-
-        }
-      }
-}
-
-const pageMaker = new PageMaker("Jack and Jill", testString);
-//
-const pageArray = pageMaker.pageGenerator(testString);
-
-const page = new Page(pageArray);
-//
-const lineArray = page.lineGenerator()
 
 
-// function displayPage(){
-//
-//
-// }
 const player = {
   name: 'Jill',
   health: 100,
@@ -200,7 +190,7 @@ const plotNode1A = {
 }
 
 const plotNode1B = {
-      lineArray: ['Jack and Jill', 'Both went up the hill', 'To fetch a couple of parachutes', 'Jack fell down','And pulled his parachute','And Jill pulled hers and came floating down after'],
+      string: "Jack and Jill, newline Both went up the hill, newLine To fetch a couple of parachutes, newline Jack fell down, newline And pulled his parachute, newline And Jill pulled hers and came floating down after",
       lineIterator: function(){
           for(let i=0; i<this.lineArray.length; i++)
           {
